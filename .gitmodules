@@ -3,4 +3,4 @@
 	url = https://github.com/tuupola/hagl/tree/60711da4441fd7959901fc48efc1eba59b5619bb
 [submodule "lib/hagl_esp_mipi"]
 	path = lib/hagl_esp_mipi
-	url = https://github.com/tuupola/hagl/tree/60711da4441fd7959901fc48efc1eba59b5619bb
+	url = https://github.com/tuupola/hagl
