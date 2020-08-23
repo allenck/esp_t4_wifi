@@ -65,8 +65,8 @@ SPDX-License-Identifier: MIT-0
 #include "font7x13.h"
 #include <cJSON.h>
 
-#define EXAMPLE_ESP_WIFI_SSID      "WAUDUBON"//CONFIG_ESP_WIFI_SSID
-#define EXAMPLE_ESP_WIFI_PASS      "298 W Audubon Dr"//CONFIG_ESP_WIFI_PASSWORD
+#define EXAMPLE_ESP_WIFI_SSID      "????????"//CONFIG_ESP_WIFI_SSID
+#define EXAMPLE_ESP_WIFI_PASS      "???????"//CONFIG_ESP_WIFI_PASSWORD
 #define EXAMPLE_ESP_WIFI_CHANNEL   11//CONFIG_ESP_WIFI_CHANNEL
 #define EXAMPLE_MAX_STA_CONN       3//CONFIG_MAX_STA_CONN
 
@@ -274,7 +274,7 @@ void demo_task(void *params)
     }
 #else
     esp_http_client_config_t config = {
-    .url = "https://api.openweathermap.org/data/2.5/onecall?lat=37.98&lon=-85.71&units=metric&lang=en&exclude=minutely,hourly&appid=0e40f74ecc24c41f6df71c302267dfba",
+    .url = "https://api.openweathermap.org/data/2.5/onecall?lat=37.98&lon=-85.71&units=metric&lang=en&exclude=minutely,hourly&appid=????????????",
     .event_handler = _http_event_handle,
     };
     esp_http_client_handle_t client = esp_http_client_init(&config);
