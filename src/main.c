@@ -58,6 +58,7 @@ SPDX-License-Identifier: MIT-0
 #include "lwip/err.h"
 #include "lwip/sys.h"
 
+//#include "defines.h"            // specific defines for this app
 #include "esp_http_client.h"
 #include "lwip/apps/sntp.h"
 //#include "courB14.h"
@@ -65,10 +66,10 @@ SPDX-License-Identifier: MIT-0
 #include "font7x13.h"
 #include <cJSON.h>
 
-#define EXAMPLE_ESP_WIFI_SSID      "????????"//CONFIG_ESP_WIFI_SSID
-#define EXAMPLE_ESP_WIFI_PASS      "???????"//CONFIG_ESP_WIFI_PASSWORD
-#define EXAMPLE_ESP_WIFI_CHANNEL   11//CONFIG_ESP_WIFI_CHANNEL
-#define EXAMPLE_MAX_STA_CONN       3//CONFIG_MAX_STA_CONN
+#define EXAMPLE_ESP_WIFI_SSID      CONFIG_ESP_WIFI_SSID
+#define EXAMPLE_ESP_WIFI_PASS      CONFIG_ESP_WIFI_PASSWORD
+#define EXAMPLE_ESP_WIFI_CHANNEL   CONFIG_ESP_WIFI_CHANNEL
+#define EXAMPLE_MAX_STA_CONN       CONFIG_MAX_STA_CONN
 
 /* FreeRTOS event group to signal when we are connected*/
 static EventGroupHandle_t s_wifi_event_group;
@@ -273,10 +274,32 @@ void demo_task(void *params)
         hagl_set_clip_window(0, 20, DISPLAY_WIDTH - 1, DISPLAY_HEIGHT - 21);
     }
 #else
+    int url_len;
+    char u1[] = "https://api.openweathermap.org/data/2.5/onecall?lat=";
+    char u2[] = CONFIG_WEATHER_LATITUDE;
+    char u3[] = "&lon=";
+    char u4[] = CONFIG_WEATHER_LONGITUDE;
+    char u5[] = "&units=metric&lang=en&exclude=minutely,hourly&appid=";
+    char u6[] = CONFIG_WEATHER_API_KEY;
+    char *url = (char *)malloc(strlen(u1)+strlen(u2)+strlen(u3)+strlen(u4)+strlen(u5)+strlen(u6)+1);
+strcpy(url, u1);
+    url_len = strlen(u1);
+    strcpy(url+url_len, u2);
+    url_len+=strlen(u2);
+    strcpy(url+url_len, u3);
+    url_len+=strlen(u3);
+    strcpy(url+url_len, u4);
+    url_len+=strlen(u4);
+    strcpy(url+url_len, u5);
+    url_len+=strlen(u5);
+    strcpy(url+url_len, u6);
+    url_len+=strlen(u6);
     esp_http_client_config_t config = {
-    .url = "https://api.openweathermap.org/data/2.5/onecall?lat=37.98&lon=-85.71&units=metric&lang=en&exclude=minutely,hourly&appid=????????????",
+    .url = "https://api.openweathermap.org/data/2.5/onecall?lat=37.98&lon=-85.71&units=metric&lang=en&exclude=minutely,hourly&appid=????????",
     .event_handler = _http_event_handle,
     };
+    config.url = url;
+    ESP_LOGI(TAG, "url = '%s'", url);
     esp_http_client_handle_t client = esp_http_client_init(&config);
     esp_err_t err = esp_http_client_perform(client);
 
